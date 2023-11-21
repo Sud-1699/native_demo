@@ -1,0 +1,31 @@
+<app-header></app-header>
+<ion-content>
+  <div id="container">
+    <ion-toggle [(ngModel)]="themeToggle" (ionChange)="toggleChange($event)" justify="space-between">
+      Dark Mode
+    </ion-toggle>
+    <div class="sub-container">
+      <ion-grid>
+        <ion-row *ngFor="let homeContent of homeContentList">
+          <ion-col (click)="goToPage(homeContent.key1.name)">
+            <ion-card class="card-align">
+              <ion-card-content class="flex-tag">
+                <ion-icon [name]="homeContent.key1.icon"></ion-icon>
+                {{ homeContent.key1["name"] | uppercase }}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col (click)="goToPage(homeContent.key2.name)">
+            <ion-card class="card-align">
+              <ion-card-content class="flex-tag">
+                <ion-icon [name]="homeContent.key2.icon"></ion-icon>
+                {{ homeContent.key2["name"] | uppercase }}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+<app-footer></app-footer>

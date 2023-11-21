@@ -1,0 +1,10 @@
+<!-- <div class="shutter-container">
+  <div class="shutter"(click)="scroll()">
+    <ion-datetime presentation="date"></ion-datetime>
+  </div>
+</div> -->
+
+<div [ngClass]="{'shutter-open': isOpen, 'shutter-closed': !isOpen}" class="shutter">
+  <ion-datetime presentation="date"></ion-datetime>
+</div>
+<button (click)="toggleShutter()">Toggle Shutter</button>
