@@ -6,20 +6,27 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { CalenderComponent } from './calender/calender.component';
 import { ReceiptComponent } from './receipt/receipt.component';
+import { PopoverComponent } from '../modals/popover/popover.component';
+import { ModalComponent } from '../modals/modal/modal.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
     CalenderComponent,
-    ReceiptComponent
+    ReceiptComponent,
+    PopoverComponent,
+    ModalComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     CalenderComponent,
-    ReceiptComponent
+    ReceiptComponent,
+    PopoverComponent,
+    ModalComponent
   ],
+  
   imports: [
     CommonModule,
     FormsModule,

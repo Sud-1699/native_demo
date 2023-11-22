@@ -44,6 +44,27 @@ export class NativeService {
     }
   }
 
+  async getImageFromAlbum() {
+    try {
+      console.log("Opening Photos Album");
+      const options: ImageOptions = {
+        quality: 100,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Photos
+      };
+      const captureImage = await Camera.getPhoto(options);
+
+      return captureImage.webPath;
+    } catch(error: any) {
+      if(error.message === 'User cancelled photos app')
+        console.error("Capacitor: " + error.message);
+      else 
+        console.error("Capacitor: Native Camera Error Msg ", error);
+      return undefined;
+    }
+  }
+
   async openBrowser(options: OpenOptions) {
     try {
       await Browser.open(options);

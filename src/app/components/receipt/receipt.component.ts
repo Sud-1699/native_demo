@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Camera, CameraResultType, ImageOptions } from '@capacitor/camera';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { PopoverComponent } from 'src/app/modals/popover/popover.component';
 import { NativeService } from 'src/app/services/native.service';
 
 @Component({
@@ -9,9 +10,15 @@ import { NativeService } from 'src/app/services/native.service';
 })
 export class ReceiptComponent  implements OnInit {
 
-  receiptList: any[] = [];
+  @ViewChild('renameFile', { read: ElementRef })
+  private renameFileAction!: ElementRef;
 
-  constructor(private nativeService: NativeService) { }
+  public receiptList: any[] = [];
+
+  constructor(
+    private nativeService: NativeService,
+    private popoverCtrl: PopoverController
+  ) { }
 
   ngOnInit() {}
 
@@ -21,7 +28,7 @@ export class ReceiptComponent  implements OnInit {
         this.captureImage();
         break;
       case 'addImg':
-
+        this.getImageFromAlbum();
         break;
       case 'addDoc':
 
@@ -59,8 +66,36 @@ export class ReceiptComponent  implements OnInit {
       const capaturedImage = await this.nativeService.capatureImage();
       if(capaturedImage)
         this.receiptList.push(capaturedImage); 
+        // this.renameFilePopup(capaturedImage);
     } catch (error) {
       console.error("Capacitor: Native Camera Error Msg ", error);
     }
+  }
+
+  private async getImageFromAlbum() {
+    try {
+      const image = await this.nativeService.getImageFromAlbum();
+      if(image)
+        this.receiptList.push(image);
+    } catch (error) {
+      console.error("Capacitor: Native Camera Error Msg ", error);
+    }
+  }
+
+  private async renameFilePopup(file: unknown | string) {
+    const renameFilePopover = await this.popoverCtrl.create({
+      component: PopoverComponent,
+      translucent: true,
+      componentProps: {
+        fileData: file,
+        htmlContent: `
+          <ion-content class="ion-padding">
+            <ion-input 
+          </ion-content>
+        `
+      },
+    });
+
+    return await renameFilePopover.present();
   }
 }
