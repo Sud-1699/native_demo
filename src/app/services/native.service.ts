@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Camera, ImageOptions} from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource, ImageOptions} from '@capacitor/camera';
 import { Browser, OpenOptions } from '@capacitor/browser';
 import { AppConstant } from '../app.constants';
 import { Device } from '@capacitor/device';
@@ -23,6 +23,24 @@ export class NativeService {
       }
       console.error(this.serviceName + `Capacitor Native Camera Error Msg: `, error);
       return null;
+    }
+  }
+
+  async capatureImage(): Promise<string | undefined> {
+    try {
+      console.log("Opening Camera");
+      const options: ImageOptions = {
+        quality: 100,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Camera
+      };
+      const captureImage = await Camera.getPhoto(options);
+
+      return captureImage.webPath;
+    } catch(error) {
+      console.error("Capacitor: Native Camera Error Msg ", error);
+      return undefined;
     }
   }
 
