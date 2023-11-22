@@ -6,13 +6,13 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
-  /* {
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  }, */
+  },
   {
     path: 'my-agenda',
     loadChildren: () => import('./pages/my-agenda/my-agenda.module').then( m => m.MyAgendaPageModule)
@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
 ];
 

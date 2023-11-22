@@ -15,12 +15,13 @@ export class AuthGuard {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
     if(this.authService.hasAuthenticated()) {
-      this.router.navigate(['/home']);
-      return false;
+      /* this.router.navigate(['/home']);
+      return false; */
+      return true;
     }
 
-    // return this.router.createUrlTree(['/login']);
-    return true;
+    return this.router.createUrlTree(['/login']);
+    // return true;
   }
   
 }

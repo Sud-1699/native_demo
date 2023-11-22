@@ -1,8 +1,20 @@
 <ion-content>
   <div *ngFor="let receipt of receiptList">
     {{ receipt }}
+    <ion-button (click)="viewImage(receipt)">
+      <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+    </ion-button>
+    <ion-button (click)="deleteReciept(receipt)">
+      <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+    </ion-button>
   </div>
-  <ion-button (click)="addReceipt()">
-    Add Receipt
+  <ion-button (click)="receiptAction('captureImg')">
+    Capture Photo
+  </ion-button>
+  <ion-button (click)="receiptAction('addImg')">
+    Add Photo
+  </ion-button>
+  <ion-button (click)="receiptAction('addDoc')">
+    Add document
   </ion-button>
 </ion-content>
