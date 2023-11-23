@@ -1,25 +1,62 @@
 <ion-content>
+  <h2>List of Recipt</h2>
   <div *ngFor="let receipt of receiptList">
-    {{ receipt }}
-    <ion-button (click)="viewImage(receipt)">
-      <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
-    </ion-button>
-    <ion-button (click)="deleteReciept(receipt)">
-      <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-    </ion-button>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>
+              {{ receipt.name }}
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-button (click)="viewFile(receipt)">
+            <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-button (click)="deleteReciept(receipt)">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
-  <ion-button (click)="receiptAction('captureImg')">
-    Capture Photo
-  </ion-button>
-  <ion-button (click)="receiptAction('addImg')">
-    Add Photo
-  </ion-button>
-  <ion-button (click)="receiptAction('addDoc')">
-    Add document
-  </ion-button>
-  <!-- <ion-popover triggerAction="click"> -->
-    <ng-template #renameFile>
-      <ion-content class="ion-padding">Hello World!</ion-content>
-    </ng-template>
-  <!-- </ion-popover> -->
-</ion-content>
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="auto">
+          <div>
+            <ion-button (click)="receiptAction('captureImg')">
+              Capture Photo
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col size="auto">
+          <div>
+            <ion-button (click)="receiptAction('addImg')">
+              Add Photo
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="auto">
+          <div>
+            <p>Selecting file using capacitor community file-picker plugin</p>
+            <ion-button (click)="receiptAction('addDoc')">
+              Add document
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col size="auto">
+          <div>
+            <p>Selecting file using input tag</p>
+            <input type="file" accept="*/*" hidden (change)="onFileSelected($event)" #fileInput />
+            <ion-button (click)="fileInput.click()">Pick File</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
