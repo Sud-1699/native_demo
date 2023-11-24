@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Capacitor } from '@capacitor/core';
 import { AppConstant } from 'src/app/app.constants';
 import { AuthService } from 'src/app/services/auth.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -38,10 +39,12 @@ export class LoginPage implements OnInit {
   }
 
   async setUserLogin() {
-    this.isRememberMe = await this.utilService.getItemLocally(AppConstant.keys.rememberMe);
-    if(this.isRememberMe) {
-      const userDetails = await this.utilService.getItemLocally(AppConstant.keys.userDetails)
-      this.loginForm.patchValue(userDetails);
+    if(Capacitor.isNativePlatform()) {
+      this.isRememberMe = await this.utilService.getItemLocally(AppConstant.keys.rememberMe);
+      if(this.isRememberMe) {
+        const userDetails = await this.utilService.getItemLocally(AppConstant.keys.userDetails)
+        this.loginForm.patchValue(userDetails);
+      }
     }
   }
 

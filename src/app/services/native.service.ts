@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource, ImageOptions} from '@capacitor/camera';
 import { Browser, OpenOptions } from '@capacitor/browser';
 import { AppConstant } from '../app.constants';
-import { Device } from '@capacitor/device';
 import { Network } from '@capacitor/network';
-// import { Capacitor } from '@capacitor/core/types/global';
+import { Filesystem, Directory, ReadFileOptions, ReadFileResult } from '@capacitor/filesystem';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +42,51 @@ export class NativeService {
       return undefined;
     }
   }
+
+  async getImageFromAlbum() {
+    try {
+      console.log("Opening Photos Album");
+      const options: ImageOptions = {
+        quality: 100,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Photos
+      };
+      const captureImage = await Camera.getPhoto(options);
+
+      return captureImage.webPath;
+    } catch(error: any) {
+      if(error.message === 'User cancelled photos app')
+        console.error("Capacitor: " + error.message);
+      else 
+        console.error("Capacitor: Native Camera Error Msg ", error);
+      return undefined;
+    }
+  }
+
+  public async readFile(uri: string): Promise<string | Blob | undefined> {
+    try {
+      const fileReadOptions: ReadFileOptions = {
+        path: uri,
+        directory: Directory.Documents
+      };
+      const { data } = await Filesystem.readFile(fileReadOptions);
+
+      return data;
+    } catch (error) {
+      console.error("Capacitor: Native Camera Error Msg ", error);
+      return undefined;
+    }
+  }
+
+  public async renameFile(file: unknown, rename: string) {
+    try {
+      return '';
+      // await Filesystem.rename()
+    } catch (error) {
+      return undefined;
+    }
+  } 
 
   async openBrowser(options: OpenOptions) {
     try {
